@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    final static String END_POINT ="http://192.168.0.48:8080/formacion/api/";
     Context context;
     //views
     TextView tvHello;
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getIngredienteDetalle(String idIngrediente){
 
-        String url = END_POINT + "ingrediente/" + idIngrediente + "/";
+        String url = MySingleton.END_POINT + "ingrediente/" + idIngrediente + "/";
         Log.i(TAG, "GET: " + url);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest

@@ -12,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 
 public class MySingleton {
 
+    public final static String END_POINT ="http://192.168.0.48:8080/formacion/api/";
     private static MySingleton mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
