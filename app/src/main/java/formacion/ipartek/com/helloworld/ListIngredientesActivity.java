@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -26,6 +28,8 @@ public class ListIngredientesActivity extends AppCompatActivity {
     private static final String TAG = "ListIngredientesAct";
     Context context;
     ArrayList<Ingrediente> ingredientes;
+    ArrayList<String> listadoNombresIngredintes;
+    ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class ListIngredientesActivity extends AppCompatActivity {
             }
         });
 
-
         getIngredientes();
 
     }
@@ -66,7 +69,11 @@ public class ListIngredientesActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         Log.i(TAG,"Response: " + response.toString());
                         try{
+
                             parseJsonToArray(response);
+                            setTitle("Ingredientes: " + ingredientes.size() );
+                            populateList();
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }
@@ -93,6 +100,7 @@ public class ListIngredientesActivity extends AppCompatActivity {
 
         JSONObject jsonObject;
         Ingrediente ingrediente;
+        listadoNombresIngredintes = new ArrayList<String>();
         for ( int i=0; i < response.length(); i++ ){
             jsonObject = new JSONObject();
             ingrediente = new Ingrediente();
@@ -104,6 +112,7 @@ public class ListIngredientesActivity extends AppCompatActivity {
                 ingrediente.setGluten(jsonObject.getBoolean("gluten"));
 
                 ingredientes.add(ingrediente);
+                listadoNombresIngredintes.add(jsonObject.getString("nombre"));
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -112,5 +121,22 @@ public class ListIngredientesActivity extends AppCompatActivity {
         //for
     }
     //parseJsonToArray
+
+
+    private void populateList(){
+        Log.i(TAG, "rellenando ListView");
+        list = (ListView)findViewById(R.id.list_ingredientes);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                listadoNombresIngredintes
+        );
+
+        list.setAdapter(adapter);
+
+    }
+    //populateList
 
 }
