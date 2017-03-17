@@ -1,6 +1,7 @@
 package formacion.ipartek.com.helloworld;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -135,6 +137,21 @@ public class ListIngredientesActivity extends AppCompatActivity {
         );
 
         list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String ingredientePulsado = listadoNombresIngredintes.get(position);
+                Snackbar.make(view, ingredientePulsado , Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                //Llamar otra Activity
+                Intent intent = new Intent( context , MainActivity.class );
+                startActivity(intent);
+
+            }
+        });
 
     }
     //populateList
