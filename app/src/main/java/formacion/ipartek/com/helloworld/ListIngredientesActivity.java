@@ -39,7 +39,6 @@ public class ListIngredientesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_ingredientes);
 
         context = getApplicationContext();
-        ingredientes = new ArrayList<Ingrediente>();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -103,6 +102,8 @@ public class ListIngredientesActivity extends AppCompatActivity {
         JSONObject jsonObject;
         Ingrediente ingrediente;
         listadoNombresIngredintes = new ArrayList<String>();
+        ingredientes = new ArrayList<Ingrediente>();
+
         for ( int i=0; i < response.length(); i++ ){
             jsonObject = new JSONObject();
             ingrediente = new Ingrediente();
@@ -114,7 +115,7 @@ public class ListIngredientesActivity extends AppCompatActivity {
                 ingrediente.setGluten(jsonObject.getBoolean("gluten"));
 
                 ingredientes.add(ingrediente);
-                listadoNombresIngredintes.add(jsonObject.getString("nombre"));
+                listadoNombresIngredintes.add( "["+jsonObject.getLong("id")+"] " + jsonObject.getString("nombre"));
             }catch (Exception e){
                 e.printStackTrace();
             }

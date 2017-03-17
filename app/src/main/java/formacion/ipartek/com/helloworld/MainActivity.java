@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG,"Response: " + response.toString());
                         try{
                             tvHello.setText( response.getString("nombre") );
+
+                            //consultar si tiene gluten
+                            boolean gluten = response.getBoolean("gluten");
+                            ImageView imvGluten = (ImageView)findViewById(R.id.imv_gluten);
+                            if ( !gluten ){
+                                imvGluten.setImageResource(R.drawable.gluten_free);
+                            }else{
+                                imvGluten.setImageResource(R.drawable.gluten);
+                            }
+
+
                         }catch (Exception e){
                             e.printStackTrace();
                         }
